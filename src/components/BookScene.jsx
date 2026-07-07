@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 export default function BookScene({ onComplete }) {
-  const [bookState, setBookState] = useState(0); // 0: Tertutup, 1: Buka Hal 1, 2: Buka Hal 2
+  const [bookState, setBookState] = useState(0);
 
   const advanceBook = () => {
     if (bookState === 0) {
@@ -19,123 +19,66 @@ export default function BookScene({ onComplete }) {
   return (
     <div className="scene-container center-content flex-col fade-in-scene">
       
-      {/* --- KOTAK TEKS DI ATAS BUKU --- */}
+      {/* KOTAK TEKS */}
       <div className="message-card" style={{
-        background: 'white',
-        padding: '15px 25px',
+        background: 'rgba(255, 255, 255, 0.9)',
+        padding: '15px',
         borderRadius: '12px',
-        width: '80%',
-        maxWidth: '350px',
+        width: '90%',
+        maxWidth: '300px', // Disesuaikan dengan buku
         textAlign: 'center',
-        marginBottom: '40px',
-        boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
+        marginBottom: '30px',
       }}>
         {bookState === 0 && (
           <>
             <h3 style={{ margin: 0, color: '#b55a5a' }}>Happy Birthday Imelyan! ❤️</h3>
-            <p style={{ margin: '5px 0 0 0', fontSize: '0.85rem', color: '#666' }}>Sentuh buku di bawah untuk membuka</p>
+            <p style={{ margin: '5px 0 0 0', fontSize: '0.8rem', color: '#666' }}>Sentuh buku untuk membuka</p>
           </>
         )}
-        
         {bookState === 1 && (
           <>
             <h4 style={{ margin: 0, color: '#b55a5a' }}>Dear Imelyan..</h4>
-            <p style={{ margin: '8px 0', fontSize: '0.9rem', color: '#444' }}>
-              Selamat ulang tahun! Di hari yang sangat spesial ini, aku sengaja meluangkan waktu membuatkan website kejutan ini khusus untukmu.
-            </p>
-            <p style={{ margin: 0, fontSize: '0.8rem', fontStyle: 'italic', color: '#888' }}>
-              "Happy Birthday Sayang ❤️"
+            <p style={{ margin: '8px 0', fontSize: '0.85rem', color: '#444' }}>
+              Selamat ulang tahun! Aku buatkan website ini spesial untukmu.
             </p>
           </>
         )}
-        
         {bookState === 2 && (
           <>
             <h4 style={{ margin: 0, color: '#b55a5a' }}>Harapanku...</h4>
-            <p style={{ margin: '8px 0', fontSize: '0.9rem', color: '#444' }}>
-              Semoga di usia yang baru ini kebahagiaan selalu menyertai setiap langkahmu. Silakan sentuh lagi untuk menutup buku, ada kejutan terakhir untukmu.
-            </p>
-            <p style={{ margin: 0, fontSize: '0.8rem', fontStyle: 'italic', color: '#888' }}>
-              "As long as you're here..."
+            <p style={{ margin: '8px 0', fontSize: '0.85rem', color: '#444' }}>
+              Semoga bahagia selalu. Sentuh lagi untuk menutup buku.
             </p>
           </>
         )}
       </div>
 
-      {/* --- BAGIAN BUKU --- */}
+      {/* BUKU (Class book-3d akan mengambil style dari CSS di atas) */}
       <div className={`book-3d ${bookState > 0 ? 'is-opened' : ''}`}>
         
-        {/* LEMBARAN 1: COVER DEPAN & KIRI (BUKA PERTAMA) */}
+        {/* LEMBARAN 1 */}
         <div 
-          className={`book-sheet cover-sheet ${bookState >= 1 ? 'flipped-180' : ''}`} 
+          className={`book-sheet ${bookState >= 1 ? 'flipped-180' : ''}`} 
           onClick={advanceBook}
-          style={{ 
-            cursor: 'pointer', 
-            zIndex: bookState === 0 ? 3 : 1 // Saat ditutup ada di paling atas, saat dibuka tertumpuk di paling bawah kiri
-          }}
+          style={{ zIndex: bookState === 0 ? 3 : 1 }}
         >
-          {/* SAMPUL DEPAN */}
-          <div className="sheet-face face-front cover-front" style={{ width: '100%', height: '100%', padding: 0, overflow: 'hidden' }}>
-            <img 
-              src="/assets/images/cover-buku.jpg" 
-              alt="Cover Depan" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
-            />
-          </div>
-          {/* HALAMAN KIRI 1 */}
-          <div className="sheet-face face-back page-bg" style={{ width: '100%', height: '100%', padding: 0, overflow: 'hidden' }}>
-            <img 
-              src="/assets/images/pasangan-kiri-1.jpg" 
-              alt="Foto Pasangan Kiri 1" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
-            />
-          </div>
+          <div className="sheet-face face-front"><img src="/assets/images/cover-buku.jpg" alt="Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>
+          <div className="sheet-face face-back"><img src="/assets/images/pasangan-kiri-1.jpg" alt="Kiri 1" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>
         </div>
 
-        {/* LEMBARAN 2: KANAN (BUKA PERTAMA) & KIRI (BUKA KEDUA) */}
+        {/* LEMBARAN 2 */}
         <div 
-          className={`book-sheet middle-sheet ${bookState >= 2 ? 'flipped-180' : ''}`} 
+          className={`book-sheet ${bookState >= 2 ? 'flipped-180' : ''}`} 
           onClick={advanceBook}
-          style={{ 
-            cursor: 'pointer', 
-            zIndex: 2 // Lembaran ini selalu berada di urutan tengah
-          }}
+          style={{ zIndex: 2 }}
         >
-          {/* HALAMAN KANAN 1 */}
-          <div className="sheet-face face-front page-bg" style={{ width: '100%', height: '100%', padding: 0, overflow: 'hidden' }}>
-            <img 
-              src="/assets/images/pasangan-kanan-1.jpg" 
-              alt="Foto Pasangan Kanan 1" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
-            />
-          </div>
-          {/* HALAMAN KIRI 2 */}
-          <div className="sheet-face face-back page-bg" style={{ width: '100%', height: '100%', padding: 0, overflow: 'hidden' }}>
-            <img 
-              src="/assets/images/pasangan-kiri-2.jpg" 
-              alt="Foto Pasangan Kiri 2" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
-            />
-          </div>
+          <div className="sheet-face face-front"><img src="/assets/images/pasangan-kanan-1.jpg" alt="Kanan 1" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>
+          <div className="sheet-face face-back"><img src="/assets/images/pasangan-kiri-2.jpg" alt="Kiri 2" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>
         </div>
 
-        {/* HALAMAN DASAR BUKU: KANAN (BUKA KEDUA) */}
-        <div 
-          className="book-sheet base-sheet page-bg" 
-          onClick={advanceBook}
-          style={{ 
-            cursor: 'pointer', 
-            zIndex: 1 // Selalu berada di urutan paling bawah (dasar buku)
-          }}
-        >
-          {/* HALAMAN KANAN 2 */}
-          <div className="sheet-face face-front" style={{ width: '100%', height: '100%', padding: 0, overflow: 'hidden' }}>
-            <img 
-              src="/assets/images/pasangankanan2.jpg" 
-              alt="Foto Pasangan Kanan 2" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
-            />
-          </div>
+        {/* HALAMAN DASAR */}
+        <div className="book-sheet" onClick={advanceBook} style={{ zIndex: 1 }}>
+          <div className="sheet-face face-front"><img src="/assets/images/pasangankanan2.jpg" alt="Kanan 2" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>
         </div>
       </div>
       
