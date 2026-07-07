@@ -12,38 +12,61 @@ body {
   color: #fff;
 }
 
-/* Efek Neon & Ukuran */
-.book-3d {
-  width: 280px;  /* Ukuran buku diperkecil */
-  height: 400px;
-  position: relative;
-  perspective: 1000px;
-  /* Efek Neon */
-  box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4; 
-  border-radius: 10px;
-  transition: all 0.3s ease;
+.scene-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #000;
 }
 
-/* Animasi Smooth */
+.message-card {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 12px;
+  width: 250px; /* Lebar teks terbatas */
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.book-3d {
+  width: 220px;  /* Ukuran buku */
+  height: 300px;
+  position: relative;
+  perspective: 1500px;
+  cursor: pointer;
+}
+
 .book-sheet {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   transform-origin: left;
-  /* Membuat gerakan membalik halaman menjadi smooth */
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Durasi 0.6s membuat animasi buka-tutup sangat smooth */
+  transition: transform 0.6s ease-in-out; 
   transform-style: preserve-3d;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
 
 .flipped-180 {
   transform: rotateY(-180deg);
 }
 
-/* Opsional: Efek hover agar neon lebih hidup */
-.book-3d:hover {
-  box-shadow: 0 0 20px #ff69b4, 0 0 40px #ff69b4;
+.sheet-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Penting agar tidak tembus pandang */
+}
+
+.sheet-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+#ff69b4, 0 0 40px #ff69b4;
 }
 
 
