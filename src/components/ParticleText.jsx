@@ -4,7 +4,7 @@ export default function ParticleText({ onComplete }) {
   const canvasRef = useRef(null);
   const [text, setText] = useState("3");
   const particlesRef = useRef([]);
-  const sequence = ["3", "2", "1", "GIFT", "FORR", "YOUU", "IMEL", "❤️"];
+  const sequence = ["3", "2", "1", "GIFT", "FORR", "YOUU", "IMELYAN", "❤️"];
 
   // 1. Sequence Kata / Huruf
   useEffect(() => {
