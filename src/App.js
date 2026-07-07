@@ -3,7 +3,7 @@ import BookScene from './BookScene';
 import CollageScene from './CollageScene';
 
 // Taruh audio di file utama agar bisa dikontrol global
-const bgMusic = new Audio('/assets/audio/lagu-kamu.mp3');
+const bgMusic = new Audio('/assets/music/background-song.mp3');
 bgMusic.loop = true;
 
 export default function App() {
