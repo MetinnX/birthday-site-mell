@@ -1,7 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function MatrixScene({ onComplete }) {
   const canvasRef = useRef(null);
+  const [assetsReady,setAssetsReady]=useState(false);
+  const imageList=[...Array.from({length:30},(_,i)=>`/assets/images/${i+1}.jpg`)];
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -9,8 +11,9 @@ export default function MatrixScene({ onComplete }) {
     
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    Promise.all(imageList.map(src=>new Promise(r=>{const img=new Image();img.onload=r;img.onerror=r;img.src=src;}))).then(()=>setAssetsReady(true));
 
-    const alphabet = "HAPPYBIRTHDAYIMELYAN❤️";
+    const alphabet = "HAPPYBIRTHDAYIMELYAA❤️";
     const fontSize = 16;
     const columns = canvas.width / fontSize;
     const rainDrops = Array.from({ length: columns }).map(() => 1);
@@ -34,22 +37,20 @@ export default function MatrixScene({ onComplete }) {
     }, 30);
 
     // Durasi Scene 1 adalah 7 detik, lalu otomatis pindah ke Scene Buku
-    const sceneTimer = setTimeout(() => {
-      onComplete();
-    }, 7000);
+    const sceneTimer=setTimeout(()=>{if(assetsReady){onComplete();return;}const i=setInterval(()=>{if(assetsReady){clearInterval(i);onComplete();}},100);},7000);
 
     return () => {
       clearInterval(matrixInterval);
       clearTimeout(sceneTimer);
     };
-  }, [onComplete]);
+  }, [onComplete,assetsReady]);
 
   return (
     <div className="scene-container center-content">
       <canvas ref={canvasRef} className="matrix-canvas" />
       <div className="overlay-text-wrapper">
-        <h1 className="pulse-text-matrix">TO IMELYAN</h1>
-        <div className="matrix-heart">❤️</div>
+        <h1 className="pulse-text-matrix">TO IMELYANN</h1>
+        <div className="matrix-heart">❤️</div><p style={{color:"white",marginTop:20,fontSize:14,opacity:.8}}>{assetsReady?"Ready ✓":"Loading memories..."}</p>
       </div>
     </div>
   );
