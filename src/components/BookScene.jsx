@@ -19,7 +19,7 @@ export default function BookScene({ onComplete }) {
   return (
     <div className="scene-container center-content flex-col fade-in-scene">
       
-      {/* --- KOTAK TEKS DI ATAS BUKU (Sesuai gambar referensi) --- */}
+      {/* --- KOTAK TEKS DI ATAS BUKU --- */}
       <div className="message-card" style={{
         background: 'white',
         padding: '15px 25px',
@@ -27,7 +27,7 @@ export default function BookScene({ onComplete }) {
         width: '80%',
         maxWidth: '350px',
         textAlign: 'center',
-        marginBottom: '40px', // Jarak yang memisahkan teks di atas dan buku di bawah
+        marginBottom: '40px',
         boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
       }}>
         {bookState === 0 && (
@@ -62,51 +62,70 @@ export default function BookScene({ onComplete }) {
         )}
       </div>
 
-      {/* --- BAGIAN BUKU (HANYA GAMBAR & BISA DIKLIK) --- */}
+      {/* --- BAGIAN BUKU --- */}
       <div className={`book-3d ${bookState > 0 ? 'is-opened' : ''}`}>
         
-        {/* LEMBARAN 1: COVER DEPAN */}
+        {/* LEMBARAN 1: COVER DEPAN & KIRI (BUKA PERTAMA) */}
         <div 
           className={`book-sheet cover-sheet ${bookState >= 1 ? 'flipped-180' : ''}`} 
           onClick={advanceBook}
           style={{ cursor: 'pointer' }}
         >
-          <div className="sheet-face face-front cover-front">
-             {/* Dikosongkan dari teks */}
+          {/* SAMPUL DEPAN (Saat buku tertutup) */}
+          <div className="sheet-face face-front cover-front" style={{ padding: 0, overflow: 'hidden' }}>
+            <img 
+              src="/assets/images/cover-buku.jpg" 
+              alt="Cover Depan" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            />
           </div>
-          <div className="sheet-face face-back page-bg">
-             {/* Dikosongkan dari teks */}
+          {/* HALAMAN KIRI 1 (Saat buku dibuka pertama kali) */}
+          <div className="sheet-face face-back page-bg" style={{ padding: 0, overflow: 'hidden' }}>
+            <img 
+              src="/assets/images/pasangan-kiri-1.jpg" 
+              alt="Foto Pasangan Kiri 1" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            />
           </div>
         </div>
 
-        {/* LEMBARAN 2: FOTO HALAMAN KIRI & KANAN */}
+        {/* LEMBARAN 2: KANAN (BUKA PERTAMA) & KIRI (BUKA KEDUA) */}
         <div 
           className={`book-sheet middle-sheet ${bookState >= 2 ? 'flipped-180' : ''}`} 
           onClick={advanceBook}
           style={{ cursor: 'pointer' }}
         >
-          <div className="sheet-face face-front page-bg">
-            <div className="photo-frame-container" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {/* Hanya menampilkan gambar */}
-              <img src="/assets/images/anita-page1.jpg" alt="Anita Page 1" className="embedded-img" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
+          {/* HALAMAN KANAN 1 (Saat buku dibuka pertama kali) */}
+          <div className="sheet-face face-front page-bg" style={{ padding: 0, overflow: 'hidden' }}>
+            <img 
+              src="/assets/images/pasangan-kanan-1.jpg" 
+              alt="Foto Pasangan Kanan 1" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            />
           </div>
-          <div className="sheet-face face-back page-bg">
-            <div className="photo-frame-container" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {/* Hanya menampilkan gambar */}
-              <img src="/assets/images/anita-page2.jpg" alt="Anita Page 2" className="embedded-img" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
+          {/* HALAMAN KIRI 2 (Saat buku dibuka kedua kali) */}
+          <div className="sheet-face face-back page-bg" style={{ padding: 0, overflow: 'hidden' }}>
+            <img 
+              src="/assets/images/pasangan-kiri-2.jpg" 
+              alt="Foto Pasangan Kiri 2" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            />
           </div>
         </div>
 
-        {/* HALAMAN DASAR BUKU */}
+        {/* HALAMAN DASAR BUKU: KANAN (BUKA KEDUA) */}
         <div 
           className="book-sheet base-sheet page-bg" 
           onClick={advanceBook}
           style={{ cursor: 'pointer' }}
         >
-          <div className="sheet-face face-front">
-             {/* Dikosongkan dari teks */}
+          {/* HALAMAN KANAN 2 (Saat buku dibuka kedua kali) */}
+          <div className="sheet-face face-front" style={{ padding: 0, overflow: 'hidden' }}>
+            <img 
+              src="/assets/images/pasangan-kanan-2.jpg" 
+              alt="Foto Pasangan Kanan 2" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            />
           </div>
         </div>
       </div>
