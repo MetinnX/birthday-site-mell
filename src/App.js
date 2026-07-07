@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
-import './App.css'; // <-- PENTING: Tambahkan baris ini agar efek bintang dari App.css aktif!
-import MatrixScene from './MatrixScene';
-import BookScene from './BookScene';
-import CollageScene from './CollageScene';
+import './App.css';
+import MatrixScene from './components/MatrixScene';
+import BookScene from './components/BookScene';
+import CollageScene from './components/CollageScene';
 
-export default function App() {
-  const [scene, setScene] = useState(1);
+function App() {
+  const [scene, setScene] = useState(1); // Mengatur adegan aktif (1, 2, atau 3)
 
   return (
     <div className="main-viewport">
-      {/* 1. BINTANG DIKUNCI DI SINI (GLOBAL BACKGROUND) */}
+      {/* Latar Belakang Bintang Langit Malam */}
       <div className="starfield"></div>
 
-      {/* 2. KONTEN PROGRAM / SCENE BERGANTI DI BAWAHNYA */}
+      {/* Logika Perpindahan Adegan */}
       {scene === 1 && <MatrixScene onComplete={() => setScene(2)} />}
       {scene === 2 && <BookScene onComplete={() => setScene(3)} />}
       {scene === 3 && <CollageScene />}
+
+      {/* Musik Latar Otomatis (Pastikan file background-song.mp3 ada di public/assets/music/) */}
+      <audio src="/assets/music/background-song.mp3" autoPlay loop hidden />
     </div>
   );
 }
+
+export default App;
