@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import BookMessage from './BookMessage';
-import './BookScene.css'; // Pastikan CSS di bawah ini diimport
 
 export default function BookScene({ onComplete }) {
   const [bookState, setBookState] = useState(0); // 0: Tertutup, 1: Buka Hal 1, 2: Buka Hal 2
