@@ -86,14 +86,17 @@ body {
   align-items: center;
 }
 
+/* Cari baris ini di App.css Anda dan sesuaikan transition-nya */
 .book-3d {
   position: relative;
   width: var(--page-width);
   height: var(--page-height);
   transform-style: preserve-3d;
-  transition: transform 0.8s ease;
+  /* Diubah menjadi 1.2s dengan cubic-bezier agar gesernya sinkron & sehalus sutra bersama halaman */
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
   transform: translateX(0px); 
 }
+
 
 /* Geser poros buku ke kanan saat terbuka agar posisinya tetap di tengah layar */
 .book-3d.is-opened {
