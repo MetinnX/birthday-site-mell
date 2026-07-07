@@ -48,7 +48,7 @@ export default function MatrixScene({ onComplete }) {
     <div className="scene-container center-content">
       <canvas ref={canvasRef} className="matrix-canvas" />
       <div className="overlay-text-wrapper">
-        <h1 className="pulse-text-matrix">TO ANITA</h1>
+        <h1 className="pulse-text-matrix">TO IMELYAN</h1>
         <div className="matrix-heart">❤️</div>
       </div>
     </div>
