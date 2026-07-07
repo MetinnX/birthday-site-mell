@@ -5,6 +5,7 @@ export default function MatrixScene({ onComplete }) {
   const [assetsReady, setAssetsReady] = useState(false);
   const imageList = [...Array.from({ length: 30 }, (_, i) => `/assets/images/${i + 1}.jpg`)];
 
+  // 1. Preload Gambar
   useEffect(() => {
     Promise.all(
       imageList.map(
@@ -19,6 +20,7 @@ export default function MatrixScene({ onComplete }) {
     ).then(() => setAssetsReady(true));
   }, []);
 
+  // 2. Efek Bola Neon Canvas
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -26,17 +28,18 @@ export default function MatrixScene({ onComplete }) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const alphabet = "HAPPYBIRTHDAYIMELYAN";
+    const alphabet = "HAPPYBIRTHDAYANITA";
     const fontSize = 16;
     const columns = canvas.width / fontSize;
     const rainDrops = Array.from({ length: columns }).map(() => 1);
 
-    const sequence = ["3", "2", "1", "HAPPY", "BIRTHDAY", "TO", "IMELYAN", "❤️"];
+    const sequence = ["3", "2", "1", "HAPPY", "BIRTHDAY", "TO", "ANITA", "♥"];
     let currentSeqIndex = -1;
     let particles = [];
     let lastSeqTime = 0;
     let matrixInterval;
 
+    // Membaca koordinat piksel untuk membentuk kata
     const getParticles = (text) => {
       const offscreen = document.createElement('canvas');
       offscreen.width = canvas.width;
@@ -53,19 +56,16 @@ export default function MatrixScene({ onComplete }) {
       } else if (text.length === 1) {
         dynamicFontSize = Math.min(canvas.width * 0.6, 350); 
       } else {
-        // Font sedikit diperkecil agar tidak terpotong karena font tebal memakan tempat
         dynamicFontSize = Math.min((canvas.width / text.length) * 1.3, 110); 
       }
       
-      // MENGGUNAKAN FONT SANGAT TEBAL AGAR BENTUK LEBIH TERLIHAT
       octx.font = `900 ${dynamicFontSize}px "Arial Black", Impact, sans-serif`;
       octx.fillText(text, canvas.width / 2, canvas.height / 2);
 
       const imgData = octx.getImageData(0, 0, canvas.width, canvas.height).data;
       const newParticles = [];
       
-      // KEPADATAN DIPERBESAR (Step diperkecil dari 12 ke 9)
-      const step = 9; 
+      const step = 9; // Jarak antar bola (semakin kecil semakin rapat)
 
       for (let y = 0; y < canvas.height; y += step) {
         for (let x = 0; x < canvas.width; x += step) {
@@ -87,11 +87,11 @@ export default function MatrixScene({ onComplete }) {
         particles = getParticles(sequence[currentSeqIndex]);
       }
 
-      // KONTRAS BACKGROUND DIKURANGI AGAR LEBIH GELAP & MENGHILANGKAN BLUR (Opacity 0.35)
+      // Efek memudar pada background
       ctx.fillStyle = 'rgba(11, 9, 20, 0.35)'; 
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // HUJAN BACKGROUND DIBUAT LEBIH REDUP
+      // --- A. Background Hujan Matrix (Opsional, dibiarkan redup) ---
       ctx.fillStyle = 'rgba(255, 71, 126, 0.15)'; 
       ctx.font = fontSize + 'px monospace';
       for (let i = 0; i < rainDrops.length; i++) {
@@ -104,16 +104,29 @@ export default function MatrixScene({ onComplete }) {
         rainDrops[i]++;
       }
 
-      // TEKS UTAMA DIBUAT LEBIH TERANG & TEGAS
-      ctx.fillStyle = '#ff7eb3'; // Pink neon yang lebih cerah
-      ctx.font = 'bold 13px monospace'; // Ukuran per karakter Matrix sedikit dibesarkan
+      // --- B. Foreground: Bola-Bola Neon ---
+      // Menambahkan efek glow / neon
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = '#ff477e'; // Warna cahaya neon (Pink)
+      ctx.fillStyle = '#ffb3c6'; // Warna inti bola (Pink sangat terang/putih)
+
       particles.forEach(p => {
-        const randomChar = alphabet[Math.floor(Math.random() * alphabet.length)];
-        ctx.fillText(randomChar, p.x, p.y);
+        // Menambahkan sedikit gerakan acak (jitter) agar bola terlihat hidup
+        const jitterX = (Math.random() - 0.5) * 1.5;
+        const jitterY = (Math.random() - 0.5) * 1.5;
+
+        ctx.beginPath();
+        // Menggambar lingkaran dengan radius 2.5
+        ctx.arc(p.x + jitterX, p.y + jitterY, 2.5, 0, Math.PI * 2);
+        ctx.fill();
       });
+
+      // Mereset shadow agar efek hujan di background tidak ikut menyala
+      ctx.shadowBlur = 0;
     };
 
-    matrixInterval = setInterval(draw, 40);
+    // Kecepatan render sedikit dipercepat untuk kehalusan animasi bola
+    matrixInterval = setInterval(draw, 35);
 
     const totalDuration = sequence.length * 1200 + 2000; 
     const sceneTimer = setTimeout(() => {
