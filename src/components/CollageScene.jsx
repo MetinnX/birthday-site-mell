@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { bgMusic } from './assets/audio/background-song
+import { bgMusic } from '/assets/music/background-song
   mp3'; // Ambil instansiasi musik yang sama
 
 export default function CollageScene() {
