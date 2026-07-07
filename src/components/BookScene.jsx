@@ -32,14 +32,14 @@ export default function BookScene({ onComplete }) {
       }}>
         {bookState === 0 && (
           <>
-            <h3 style={{ margin: 0, color: '#b55a5a' }}>Happy Birthday Anita! ❤️</h3>
+            <h3 style={{ margin: 0, color: '#b55a5a' }}>Happy Birthday Imelyan! ❤️</h3>
             <p style={{ margin: '5px 0 0 0', fontSize: '0.85rem', color: '#666' }}>Sentuh buku di bawah untuk membuka</p>
           </>
         )}
         
         {bookState === 1 && (
           <>
-            <h4 style={{ margin: 0, color: '#b55a5a' }}>Dear Anita...</h4>
+            <h4 style={{ margin: 0, color: '#b55a5a' }}>Dear Imelyan..</h4>
             <p style={{ margin: '8px 0', fontSize: '0.9rem', color: '#444' }}>
               Selamat ulang tahun! Di hari yang sangat spesial ini, aku sengaja meluangkan waktu membuatkan website kejutan ini khusus untukmu.
             </p>
