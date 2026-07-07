@@ -4,7 +4,7 @@ export default function ParticleText({ onComplete }) {
   const canvasRef = useRef(null);
   const [text, setText] = useState("3");
   const particlesRef = useRef([]);
-  const sequence = ["3", "2", "1", "HAPPY", "BIRTHDAY", "TO", "IMEYY", "❤️"];
+  const sequence = ["3", "2", "1", "HAPPY", "BIRTHDAY", "TO", "ANITA", "❤️"];
 
   useEffect(() => {
     let index = 0;
@@ -24,6 +24,10 @@ export default function ParticleText({ onComplete }) {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     
+    // Pastikan Canvas Fullscreen
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
     const getTargetCoordinates = () => {
       const off = document.createElement('canvas');
       off.width = canvas.width; off.height = canvas.height;
@@ -31,14 +35,16 @@ export default function ParticleText({ onComplete }) {
       octx.fillStyle = 'white';
       octx.textAlign = 'center';
       octx.textBaseline = 'middle';
-      const size = Math.min(canvas.width * 0.5, 300);
-      octx.font = `900 ${size}px Arial Black`;
+      
+      // Ukuran font disesuaikan agar selalu pas di tengah
+      const size = Math.min(canvas.width * 0.4, 400);
+      octx.font = `900 ${size}px "Arial Black", sans-serif`;
       octx.fillText(text === '❤️' ? '♥' : text, canvas.width / 2, canvas.height / 2);
       
       const img = octx.getImageData(0, 0, canvas.width, canvas.height).data;
       const targets = [];
-      for (let y = 0; y < canvas.height; y += 9) {
-        for (let x = 0; x < canvas.width; x += 9) {
+      for (let y = 0; y < canvas.height; y += 8) { // Step diperkecil agar lebih padat
+        for (let x = 0; x < canvas.width; x += 8) {
           if (img[(y * canvas.width + x) * 4 + 3] > 128) targets.push({ x, y });
         }
       }
@@ -56,15 +62,18 @@ export default function ParticleText({ onComplete }) {
     let frame;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.shadowBlur = 15;
+      
+      // Efek Neon yang jauh lebih terang
+      ctx.shadowBlur = 25; 
       ctx.shadowColor = '#ff477e';
-      ctx.fillStyle = '#ffb3c6';
+      ctx.fillStyle = '#ffffff'; // Inti bola berwarna putih agar terlihat sangat terang
 
       particlesRef.current.forEach(p => {
-        p.x += (p.tx - p.x) * 0.08;
-        p.y += (p.ty - p.y) * 0.08;
+        p.x += (p.tx - p.x) * 0.1;
+        p.y += (p.ty - p.y) * 0.1;
+        
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, 3, 0, Math.PI * 2); // Bola sedikit lebih besar
         ctx.fill();
       });
       frame = requestAnimationFrame(animate);
@@ -73,5 +82,17 @@ export default function ParticleText({ onComplete }) {
     return () => cancelAnimationFrame(frame);
   }, [text]);
 
-  return <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, zIndex: 2 }} />;
+  return (
+    <canvas 
+      ref={canvasRef} 
+      style={{ 
+        position: 'absolute', 
+        top: 0, 
+        left: 0, 
+        width: '100vw', 
+        height: '100vh', 
+        zIndex: 2 
+      }} 
+    />
+  );
 }
