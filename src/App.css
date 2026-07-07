@@ -50,6 +50,48 @@ body {
   text-shadow: 0 0 20px var(--pink-primary), 0 0 40px var(--pink-primary);
   animation: textGlowPulse 2s ease-in-out infinite alternate;
 }
+
+/* Kontainer utama buku */
+.book-3d {
+  position: relative;
+  width: 250px; /* Sesuaikan ukuran buku Anda */
+  height: 350px;
+  perspective: 1500px; /* Penting agar efek 3D terlihat */
+}
+
+/* Setiap lembaran kertas */
+.book-sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d; /* Wajib agar sisi depan-belakang jalan */
+  transform-origin: left center; /* Titik putar harus di sebelah kiri (engsel buku) */
+  transition: transform 0.8s ease-in-out;
+}
+
+/* Saat halaman diputar */
+.flipped-180 {
+  transform: rotateY(-180deg);
+}
+
+/* Sisi depan dan belakang dari satu lembar kertas */
+.sheet-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Menyembunyikan gambar yang sedang membelakangi layar */
+}
+
+/* Membalik sisi belakang agar tidak terbalik secara visual */
+.face-back {
+  transform: rotateY(180deg);
+}
+
+
 .matrix-heart { font-size: 5rem; animation: heartPulse 0.6s infinite alternate cubic-bezier(0.25, 0.8, 0.25, 1); }
 @keyframes textGlowPulse { from { text-shadow: 0 0 10px var(--pink-primary); } to { text-shadow: 0 0 30px var(--pink-primary); } }
 @keyframes heartPulse { to { transform: scale(1.2); } }
