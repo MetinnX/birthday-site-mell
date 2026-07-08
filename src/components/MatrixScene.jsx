@@ -48,8 +48,8 @@ export default function MatrixScene({ onComplete }) {
   }, []);
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: '#05050a', overflow: 'hidden' }}>
-      <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0 }} />
+    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'transparent', overflow: 'hidden' }}>
+      <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
       {assetsReady && <ParticleText onComplete={onComplete} />}
     </div>
   );
