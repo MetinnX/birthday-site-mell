@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import BookScene from './BookScene';
-import MatrixScene from './MatrixScene';
-import CollageScene from './CollageScene';
-
+import MatrixScene from './components/MatrixScene';
+import BookScene from './components/BookScene';
+import CollageScene from './components/CollageScene';
 // Taruh audio di file utama agar bisa dikontrol global
 const bgMusic = new Audio('/assets/music/background-song.mp3');
 bgMusic.loop = true;
