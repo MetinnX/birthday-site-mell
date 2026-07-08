@@ -1,24 +1,44 @@
-import React, { useState } from 'react';
-import { bgMusic } from '/assets/music/background-song.mp3');
-  mp3'; // Ambil instansiasi musik yang sama
+import React, { useEffect, useState } from 'react';
+import { getBgMusic, isBgMusicPlaying, pauseBgMusic, playBgMusic } from '../utils/music';
 
 export default function CollageScene() {
-  // State untuk memantau apakah musik sedang bunyi atau dijeda
-  const [isPlaying, setIsPlaying] = useState(!bgMusic.paused);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const toggleMusic = () => {
-    if (bgMusic.paused) {
-      bgMusic.play();
-      setIsPlaying(true);
+  useEffect(() => {
+    const music = getBgMusic();
+    const syncPlayingState = () => setIsPlaying(isBgMusicPlaying());
+
+    syncPlayingState();
+
+    if (!music) return undefined;
+
+    music.addEventListener('play', syncPlayingState);
+    music.addEventListener('pause', syncPlayingState);
+    music.addEventListener('ended', syncPlayingState);
+
+    return () => {
+      music.removeEventListener('play', syncPlayingState);
+      music.removeEventListener('pause', syncPlayingState);
+      music.removeEventListener('ended', syncPlayingState);
+    };
+  }, []);
+
+  const toggleMusic = async () => {
+    const music = getBgMusic();
+    if (!music) return;
+
+    if (music.paused) {
+      await playBgMusic();
     } else {
-      bgMusic.pause();
-      setIsPlaying(false);
+      pauseBgMusic();
     }
+
+    setIsPlaying(!music.paused);
   };
 
   return (
     <div className="scene-container center-content flex-col fade-in-scene">
-      
+
       {/* --- TOMBOL KONTROL MUSIK (FLOATING BUTTON) --- */}
       <button 
         onClick={toggleMusic}
