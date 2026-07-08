@@ -1,7 +1,5 @@
-uimport React, { useState } from 'react';
+import React, { useState } from 'react';
 import BookMessage from './BookMessage';
-const bgMusic = new Audio('/assets/music/background-song.mp3');
-
 
 export default function BookScene({ onComplete }) {
   const [bookState, setBookState] = useState(0);
@@ -21,9 +19,6 @@ export default function BookScene({ onComplete }) {
 
   return (
     <div className="scene-container">
-      {/* --- LAPISAN BINTANG BERTERBANGAN (BACKGROUND) --- */}
-      <div className="starfield"></div>
-
       {/* --- KOTAK TEKS DI ATAS BUKU --- */}
       <BookMessage bookState={bookState} />
 
