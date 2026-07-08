@@ -3,7 +3,6 @@ import './App.css';
 import MatrixScene from './components/MatrixScene';
 import BookScene from './components/BookScene';
 import CollageScene from './components/CollageScene';
-
 function App() {
   const [scene, setScene] = useState(1); // Mengatur adegan aktif (1, 2, atau 3)
 
