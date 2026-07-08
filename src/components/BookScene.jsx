@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import BookMessage from './BookMessage';
+import { playBgMusic } from '../utils/music';
 
 export default function BookScene({ onComplete }) {
   const [bookState, setBookState] = useState(0);
 
   const advanceBook = () => {
     if (bookState === 0) {
+      playBgMusic();
       setBookState(1);
     } else if (bookState === 1) {
       setBookState(2);
@@ -25,7 +27,7 @@ export default function BookScene({ onComplete }) {
       {/* --- BAGIAN BUKU --- */}
       <div className="book-wrapper">
         <div className={`book-3d ${bookState > 0 ? 'is-opened' : ''}`}>
-          
+
           {/* LEMBARAN 1 (Cover Depan & Halaman Kiri 1) */}
           <div 
             className={`book-sheet ${bookState >= 1 ? 'flipped-180' : ''}`} 
